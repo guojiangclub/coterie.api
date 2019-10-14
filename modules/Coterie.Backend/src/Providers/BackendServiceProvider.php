@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Cookie;
+use iBrand\Coterie\Backend\Console\InstallCommand;
 
 class BackendServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,9 @@ class BackendServiceProvider extends ServiceProvider
                 __DIR__ . '/../../resources/assets' => public_path('assets/account-backend'),
             ], 'account-backend-assets');
         }
+
+        $this->commands([InstallCommand::class]);
+
 
         Admin::observe(AdminCreateObserver::class);
 

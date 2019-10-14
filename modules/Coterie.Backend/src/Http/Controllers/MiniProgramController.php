@@ -25,6 +25,7 @@ use Storage;
         }
 
         public function version(){
+            return ;
             $platform=new MiniProgramService(request()->cookie('ibrand_log_appid'),request()->cookie('ibrand_log_uuid'));
 
             $version=$platform->getVersion();

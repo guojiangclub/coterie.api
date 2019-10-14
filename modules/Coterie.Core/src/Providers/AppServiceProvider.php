@@ -58,6 +58,7 @@ use iBrand\Coterie\Core\Policies\PraisePolicy;
 use iBrand\Coterie\Core\Models\Order;
 use iBrand\Coterie\Core\Policies\OrderPolicy;
 use iBrand\Coterie\Core\Services\CoteriePayNotifyService;
+use iBrand\Coterie\Core\Console\InstallCommand;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -104,6 +105,8 @@ class AppServiceProvider extends ServiceProvider
             app_path() . '/../vendor/laravel/passport/database/migrations' => database_path('migrations'),
         ], 'migrations');
 
+
+        $this->commands([InstallCommand::class]);
 
         $this->commands([
             \iBrand\Coterie\Core\Console\DatabaseCreateCommand::class,
@@ -212,21 +215,21 @@ class AppServiceProvider extends ServiceProvider
     protected function setRedisTenancy()
     {
 
-        config(['cache.default' => 'redis_tenancy']);
-
-        Cache::extend('redis_tenancy', function ($app) {
-
-            $uuid = client_id();
-
-            $res = Cache::repository(new RedisStore(
-                $app['redis'],
-                $uuid,
-                $app['config']['cache.stores.redis.connection']
-            ));
-
-            return $res;
-
-        });
+//        config(['cache.default' => 'redis_tenancy']);
+//
+//        Cache::extend('redis_tenancy', function ($app) {
+//
+//            $uuid = client_id();
+//
+//            $res = Cache::repository(new RedisStore(
+//                $app['redis'],
+//                $uuid,
+//                $app['config']['cache.stores.redis.connection']
+//            ));
+//
+//            return $res;
+//
+//        });
 
 
     }

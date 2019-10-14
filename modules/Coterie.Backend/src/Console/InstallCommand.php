@@ -98,9 +98,11 @@ class InstallCommand extends Command
             'slug' => 'manager',
         ]);*/
 
-        $admin::first()->roles()->save($admin_roles::first());
 
-        //$this->call('ibrand:backend-install');
+
+        //$admin::first()->roles()->save($admin_roles::first());
+
+        $this->call('ibrand:backend-install');
         $menu::truncate();
         $menu::insert([
             [
