@@ -11,7 +11,7 @@
 
 return [
     'routeAttributes' => [
-        'middleware' => ['api', 'cors'],
+        'middleware' => ['api', 'cors','coterie_notification'],
     ],
 
     'routeAuthAttributes' => [
