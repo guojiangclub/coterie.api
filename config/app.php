@@ -173,7 +173,7 @@ return [
         Overtrue\LaravelWechat\ServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
-
+        iBrand\Auth\Api\ApiServiceProvider::class,
 
         /*
          * Application Service Providers...
