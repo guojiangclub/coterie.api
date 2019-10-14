@@ -167,6 +167,13 @@ return [
         /*
          * Package Service Providers...
          */
+        Laravel\Passport\PassportServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Overtrue\LaravelWechat\ServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        HieuLe\Active\ActiveServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -176,6 +183,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+
+        iBrand\Coterie\Core\Providers\AppServiceProvider::class,
+        iBrand\Coterie\Backend\Providers\BackendServiceProvider::class,
+        iBrand\Coterie\Server\Providers\ServerServiceProvider::class,
 
     ],
 
@@ -225,6 +237,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Active' => HieuLe\Active\Facades\Active::class,
+        'Charge'=> iBrand\Component\Pay\Facades\Charge::class,
+        'PayNotify' => iBrand\Component\Pay\Facades\PayNotify::class,
 
     ],
 
