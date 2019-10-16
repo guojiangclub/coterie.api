@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,11 +16,11 @@
             padding: 0;
             margin: 0;
             width: 100%;
-            height:667px;
+            height:400px;
         }
         #knowledge {
-            height: 100%;
-            overflow: auto;
+            /* height: 100%;
+            overflow: auto; */
         }
         #knowledge .share-cirle {
             background-color: #FFFFFF;
@@ -236,12 +236,12 @@
             overflow: hidden;
             visibility: hidden;
         }
-        #knowledge .block.knowladge-item .theme-item .img .item__list .img {
-            width: 100%;
-        }
-        #knowledge .block.knowladge-item .theme-item .img .item__list .img img {
-            width: 100%;
-        }
+        /* #knowledge .block.knowladge-item .theme-item .img .item__list .img {
+             width: 100%;
+         } */
+        /* #knowledge .block.knowladge-item .theme-item .img .item__list .img img {
+             width: 100%;
+         } */
         #knowledge .block.knowladge-item .theme-item .img .item__list .list__li {
             width: 31.33%;
             padding: 1%;
@@ -494,63 +494,90 @@
                 @endif
 
 
-                <div class="img">
+                <div class="img" style="height: auto;">
                     <div class="item__list">
                         <!--如果图片长度为1，显示一张-->
                         <!-- <div class="img" bindtap="preImage">
                              <img  src="https://wx.qlogo.cn/mmopen/vi_32/QvyPibAqLH5uEr7GNL6Lg9gvZxLYoARiawTicOVLySNYh7ABJYH2GPRLbX54F4jUHibag5QIrRbwKCS0ibYWmNUL8VA/132">
                          </div>-->
-                        <div class="img">
-                            <div class="item__list more">
 
-                                @if($content->img_list_info)
+                        @if($content->style_type!=='question')
 
-                                    @foreach($content->img_list_info as $item)
-                                        <div class="list__li">
-                                            <div style="background: url('{{$item}}'); background-position: center;background-repeat: no-repeat;background-size: cover;">
-                                                <span></span>
+                            @if($content->img_list_info AND !$content->link_info)
+                                <div class="img" style="width: 100%;">
+                                    <div class="item__list more">
+
+                                        @foreach($content->img_list_info as $item)
+
+                                            <div class="list__li">
+                                                <div style="background: url('{{$item}}'); background-position: center;background-repeat: no-repeat;background-size: cover;">
+                                                    <span></span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endforeach
-                                @endif
 
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
 
+                        @if($content->link_info || !$content->img_list_info)
+                            <div style="height: 350px;">
                             </div>
-                        </div>
-
+                        @endif
 
                         @if($content->link_info)
                             <div class="url">
                                 <div class="edit-link">
                                     <div class="link-left">
-                                        <div class="title">{{$content->link_info->title}}</div>
-                                        <div class="txt">{{$content->link_info->like}}</div>
+                                        <div class="title">{{$content->link_info['title']}}</div>
+                                        <div class="txt">{{$content->link_info['link']}}</div>
                                     </div>
-                                    <div class="link-right">
-                                        <img src="{{$content->link_info->img}}" alt="">
-                                    </div>
+                                <!-- <div class="link-right">
+										<img src="{{$content->link_info['img']}}" alt="">
+									</div> -->
                                 </div>
                             </div>
                         @endif
 
-                        <div class="reply-box">
+                        @if($content->question)
+                            <div class="ask mx-1px-left">
 
-                            @if($content->question)
-                                <div class="ask mx-1px-left">
-                                    <div class="text">
-                                        {{$content->question->user->nick_name}}提问：{{$content->question->content}}。
+                                <div class="text">
+                                    {{$content->question->user->nick_name}}提问：{{$content->question->content}}。
+                                </div>
+                                <div class="img">
+                                    <div class="item__list more">
+
+                                        @if($content->question->img_list_info)
+
+                                            @foreach($content->question->img_list_info as $item)
+
+                                                <div class="list__li">
+                                                    <div style="background: url('{{$item}}'); background-position: center;background-repeat: no-repeat;background-size: cover;">
+                                                        <span></span>
+                                                    </div>
+                                                </div>
+
+                                            @endforeach
+
+                                        @endif
+
+
                                     </div>
                                 </div>
-                            @endif
+                            </div>
 
+
+                        @endif
+
+                        <div class="reply-box">
                             @if($content->style_type=='question')
                                 <div class="reply">
                                     {{$content->description}}
                                 </div>
+
                             @endif
-
-
-
                         </div>
                     </div>
                 </div>
