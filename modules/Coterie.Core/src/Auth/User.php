@@ -13,12 +13,12 @@ namespace iBrand\Coterie\Core\Auth;
 
 use iBrand\Component\User\Models\User as BaseUser;
 use Laravel\Passport\HasApiTokens;
-
+use Overtrue\LaravelFollow\Traits\CanFavorite;
 
 class User extends BaseUser
 {
     use HasApiTokens;
-
+    use CanFavorite;
     protected $hidden = ['client_id'];
 
     /**

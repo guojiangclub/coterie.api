@@ -53,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
             });*/
 
         Route::prefix('api')
-            ->middleware(['api','cors'])
+            ->middleware(['api','cors','coterie_notification'])
             ->namespace($this->namespace)
             ->group(__DIR__.'/../routes/api.php');
     }

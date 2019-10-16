@@ -161,7 +161,7 @@ class QuestionController extends Controller
 
         $question = $this->questionRepository->findWhere(['coterie_id' => $coterie_id, 'answer_user_id' => $user->id,'id'=>$question_id])->first();
 
-        if($user->cant('isQuestionAnswerUser',$question) || $question->content_id){
+        if($user->cant('isQuestionAnswerUser',$question)){
 
             throw new \Exception('无权限');
         }

@@ -58,68 +58,6 @@ class CoterieController extends Controller
 
     public function test()
     {
-//        $uuid=client_id();
-//
-//        $app='default';
-//
-//        if($uuid){
-//
-//            $app=$uuid;
-//
-//            $info[$app]=[
-//
-//                // 公众号 APPID
-//                'app_id' => '',
-//                // 小程序 APPID
-//                'miniapp_id' => request()->header('wechatappid'),
-//                // APP 引用的 appid
-//                'appid' => '',
-//                // 微信支付分配的微信商户号
-//                //'mch_id' => settings('wechat_payment_mcn_id'),
-//                // 微信支付异步通知地址
-//                'notify_url' => '/notify/wechat',
-//                // 微信支付签名秘钥
-//                //'key' => settings('wechat_payment_key'),
-//                // 客户端证书路径，退款、红包等需要用到。请填写绝对路径，linux 请确保权限问题。pem 格式。
-//                'cert_client' => '',
-//                // 客户端秘钥路径，退款、红包等需要用到。请填写绝对路径，linux 请确保权限问题。pem 格式。
-//                'cert_key' => '',
-//                // optional，默认 warning；日志路径为：sys_get_temp_dir().'/logs/yansongda.pay.log'
-//                'log' => [
-//                    'file' => storage_path('logs/wechat_'.$uuid.'.log'),
-//                    //  'level' => 'debug'
-//                    'type' => 'single', // optional, 可选 daily.
-//                    'max_file' => 30,
-//                ],
-//
-//            ];
-//
-//            app('config')->set('ibrand.pay.default.wechat', array_merge(config('ibrand.pay.default.wechat'), $info));
-//
-//            config(['ibrand.pay.default.wechat.' . $app => $info]);
-//
-//            $config = config('ibrand.pay.default.wechat.'.$app);
-//
-//        }
-
-        //app('config')->set('ibrand.pay.default.wechat.'.$app,$info);
-
-        //dd(config('ibrand.pay.default.wechat'));
-
-        //dd( $config = config('ibrand.pay.default.wechat.'.$app));
-
-
-        //dd(Hashids_encode(100,'ibrand_saas'));
-
-        //dd(Hashids_decode('KoY5lO2N3OveDnq','ibrand_saas'));
-
-        //\Redis::set('name', 'Taylor');
-
-        //dd(\Redis::command('keys',['*']));
-
-        //dd(\Redis::get('name'));
-
-        // dd($this->coterieRepository->find(1));
 
     }
 

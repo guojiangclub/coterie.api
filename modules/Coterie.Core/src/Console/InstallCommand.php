@@ -38,7 +38,7 @@ class InstallCommand extends Command
 
         $this->call('ibrand:coterie-backend-install');
 
-        $this->call('passport:install');
+        $this->call('passport:keys');
 
         if(!DB::table(config('admin.database.menu_table'))->where('title','圈子管理')->first()){
 

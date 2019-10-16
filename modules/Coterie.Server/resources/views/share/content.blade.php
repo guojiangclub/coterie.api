@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -488,9 +488,9 @@
 
 
                 @if($content->style_type=='default')
-                <div class="text">
-                    分享一个 {{$content->description}}
-                </div>
+                    <div class="text">
+                        分享一个 {{$content->description}}
+                    </div>
                 @endif
 
 
@@ -503,16 +503,16 @@
                         <div class="img">
                             <div class="item__list more">
 
-                                @if(count($content->img_list_info))
+                                @if($content->img_list_info)
 
-                                    @foreach($content->img_list_info as $item) )
-                                    <div class="list__li">
-                                        <div style="background: url('{{$item}}'); background-position: center;background-repeat: no-repeat;background-size: cover;">
-                                            <span></span>
+                                    @foreach($content->img_list_info as $item)
+                                        <div class="list__li">
+                                            <div style="background: url('{{$item}}'); background-position: center;background-repeat: no-repeat;background-size: cover;">
+                                                <span></span>
+                                            </div>
                                         </div>
-                                    </div>
                                     @endforeach
-                                 @endif
+                                @endif
 
 
                             </div>
@@ -520,32 +520,32 @@
 
 
                         @if($content->link_info)
-                        <div class="url">
-                            <div class="edit-link">
-                                <div class="link-left">
-                                    <div class="title">{{$content->link_info->title}}</div>
-                                    <div class="txt">{{$content->link_info->like}}</div>
-                                </div>
-                                <div class="link-right">
-                                    <img src="{{$content->link_info->img}}" alt="">
+                            <div class="url">
+                                <div class="edit-link">
+                                    <div class="link-left">
+                                        <div class="title">{{$content->link_info->title}}</div>
+                                        <div class="txt">{{$content->link_info->like}}</div>
+                                    </div>
+                                    <div class="link-right">
+                                        <img src="{{$content->link_info->img}}" alt="">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
 
                         <div class="reply-box">
 
                             @if($content->question)
-                            <div class="ask mx-1px-left">
-                                <div class="text">
-                                    {{$content->question->user->nick_name}}提问：{{$content->question->content}}。
+                                <div class="ask mx-1px-left">
+                                    <div class="text">
+                                        {{$content->question->user->nick_name}}提问：{{$content->question->content}}。
+                                    </div>
                                 </div>
-                            </div>
                             @endif
 
-                             @if($content->style_type=='question')
+                            @if($content->style_type=='question')
                                 <div class="reply">
-                                   {{$content->description}}
+                                    {{$content->description}}
                                 </div>
                             @endif
 

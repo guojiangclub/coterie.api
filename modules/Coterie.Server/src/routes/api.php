@@ -9,14 +9,6 @@
  * file that was distributed with this source code.
  */
 
-//$router->group(['middleware' => ['databaselogger']], function ($router) {
-
-//$router->post('oauth/sms', 'AuthController@smsLogin')->name('api.oauth.sms');
-//
-//$router->post('oauth/MiniProgramLogin', 'MiniProgramLoginController@login')->name('api.oauth.miniprogram.login');
-//$router->post('oauth/MiniProgramMobileLogin', 'MiniProgramLoginController@mobileLogin')->name('api.oauth.miniprogram.mobile.login');
-//
-//$router->get('oauth/miniprogram/openid', 'MiniProgramLoginController@getOpenIdByCode');
 
 $router->post('wechat/notify', 'WechatPayNotifyController@notify');
 

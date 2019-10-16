@@ -15,7 +15,6 @@ use iBrand\Coterie\Core\Notifications\AtUser;
 use iBrand\Coterie\Core\Services\NotificationService;
 use iBrand\Coterie\Server\Resources\Notification;
 use Validator;
-use iBrand\Coterie\Server\Transformers\NotificationTransformer;
 use iBrand\Coterie\Core\Repositories\MemberRepository;
 use iBrand\Coterie\Core\Repositories\CoterieRepository;
 
