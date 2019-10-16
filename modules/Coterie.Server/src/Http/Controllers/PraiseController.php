@@ -71,7 +71,7 @@ class PraiseController extends Controller
 
         if(!$content || $content->status!=1){
 
-            return $this->failed('content_id不存在');
+            return $this->failed('内容不存在或已删除');
         }
 
         $member=$this->isCoterieUser($content->coterie_id);

@@ -291,7 +291,7 @@ class ContentController extends Controller
             return $this->success($info);
         }
 
-        return $this->failed('不存在或已删除');
+        return $this->failed('内容不存在或已删除');
 
     }
 
