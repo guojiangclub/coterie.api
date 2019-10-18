@@ -9,10 +9,9 @@
  * file that was distributed with this source code.
  */
 
-
 $router->post('wechat/notify', 'WechatPayNotifyController@notify');
 
-$router->get('coterie/test', 'CoterieController@test');
+$router->post('coterie/test', 'CoterieController@test');
 
 $router->get('coterie/share', 'CoterieController@share');
 

@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
 
         'cors' => \Barryvdh\Cors\HandleCors::class,
         'coterie_notification' => \iBrand\Coterie\Server\Http\Middleware\Notification::class,
+        'msg_sec_check'=>\iBrand\Coterie\Server\Http\Middleware\msgSecCheck::class,
     ];
 }

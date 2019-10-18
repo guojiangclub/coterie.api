@@ -17,7 +17,6 @@ use iBrand\Coterie\Core\Repositories\ContentRepository;
 use iBrand\Coterie\Core\Repositories\MemberRepository;
 use iBrand\Coterie\Core\Services\CoterieService;
 use Illuminate\Validation\Rule;
-use iBrand\Coterie\Server\Transformers\CoterieTransformer;
 use Validator;
 use iBrand\Component\User\Models\User;
 use Storage;
