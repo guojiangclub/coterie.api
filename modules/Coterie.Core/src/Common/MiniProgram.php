@@ -23,11 +23,42 @@ class MiniProgram
 
     }
 
-    public function imgSecCheck($path){
+    public function imgSecCheck($path)
+    {
 
         $app = Factory::miniProgram($this->config);
 
         return $app->content_security->checkImage($path);
+    }
+
+    public function createMiniQrcode($page, $width, $save_path, $type = 'B', $scene = '', $disk = 'public')
+    {
+        $app = Factory::miniProgram($this->config);
+
+        $option['width'] = $width;
+        $option['scene'] = $scene;
+        if ('B' == $type) {
+            $option['page'] = $page;
+            $body = $app->app_code->getUnlimit($scene, $option);
+        } else {
+            $body = $app->app_code->get($page, $option);
+        }
+
+        if (str_contains($body, 'errcode')) {
+            return false;
+        }
+
+        if ('qiniu' == $disk) {
+            $result = Storage::disk('qiniu')->put($save_path, $body);
+        } else {
+            $result = Storage::disk($disk)->put($save_path, $body);
+        }
+
+        if ($result) {
+            return $save_path;
+        }
+
+        return false;
     }
 
 }
