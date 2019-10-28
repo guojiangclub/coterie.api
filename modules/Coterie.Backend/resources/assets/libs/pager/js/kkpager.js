@@ -1,4 +1,4 @@
-﻿/*
+/*
   kkpager V1.3
   https://github.com/pgkk/kkpager
 
