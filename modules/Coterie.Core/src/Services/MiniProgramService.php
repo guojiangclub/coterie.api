@@ -64,7 +64,7 @@ class MiniProgramService
 //
 //    }
 
-    public function createMiniQrcode($page, $width, $scene)
+    public function createMiniQrcode($page, $width, $scene,$str,$type='coterie')
     {
         $option = [
             'page' => $page,
@@ -78,9 +78,8 @@ class MiniProgramService
         if (str_contains($body, 'errcode')) {
             return false;
         }
-
         $img_name = 'mini_qrcode.jpg';
-        $savePath = 'public/reduce/'.generate_random_string().'/'.$img_name;
+        $savePath = 'public/'.$type.'/'.$str.'/'.$img_name;
         $result = \Storage::put($savePath, $body);
         if ($result) {
             return $savePath;

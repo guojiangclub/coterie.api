@@ -371,14 +371,18 @@ class ContentController extends Controller
         $scene = $member->coterie_id . '_' . request('content_id') . '_' . request('invite_user_code');
 
         //获取小程序码
-        $mini_code = $this->miniProgramService->createMiniQrcode($pages, 800, $scene);
+        $type='coterie';
+        $mini_code = $this->miniProgramService->createMiniQrcode($pages, 800, $scene,$coterie_id,$type);
 
         if (!$mini_code) {
 
             return $this->failed('生成小程序码失败');
         }
+        $mini_qrcode = env('APP_URL').'/storage/'.$type.'/'.$coterie_id.'/'.'mini_qrcode.jpg';
 
-        $route = url('api/content/share') . '/?user_id=' . $member->user_id . '&content_id=' . request('content_id') . '&coterie_id=' . $member->coterie_id . '&appid=' . $this->client_id() . '&scene=' . $scene . '&mini_code=' . $mini_code;
+        \Log::info($mini_qrcode);
+
+        $route = url('api/content/share') . '/?user_id=' . $member->user_id . '&content_id=' . request('content_id') . '&coterie_id=' . $member->coterie_id . '&appid=' . $this->client_id() . '&scene=' . $scene . '&mini_code=' . $mini_qrcode;
 
         $result = MiniProgramShareImg::generateShareImage($route, 'share_coterie_content');
 
