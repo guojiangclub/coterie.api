@@ -371,14 +371,15 @@ class ContentController extends Controller
         $scene = $member->coterie_id . '_' . request('content_id') . '_' . request('invite_user_code');
 
         //获取小程序码
-        $type='coterie';
-        $mini_code = $this->miniProgramService->createMiniQrcode($pages, 800, $scene,$coterie_id,$type);
+        $type='content';
+
+        $mini_code = $this->miniProgramService->createMiniQrcode($pages, 800, $scene,request('content_id'),$type);
 
         if (!$mini_code) {
 
             return $this->failed('生成小程序码失败');
         }
-        $mini_qrcode = env('APP_URL').'/storage/'.$type.'/'.$coterie_id.'/'.'mini_qrcode.jpg';
+        $mini_qrcode = env('APP_URL').'/storage/'.$type.'/'.request('content_id').'/'.'mini_qrcode.jpg';
 
         \Log::info($mini_qrcode);
 

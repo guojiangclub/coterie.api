@@ -267,15 +267,20 @@ class CoterieController extends Controller
         $scene = $member->coterie_id . '_' . request('invite_user_code');
 
         //获取小程序码
-        $mini_code = $this->miniProgramService->createMiniQrcode($pages, 800, $scene);
+        $type='coterie';
 
+        $mini_code = $this->miniProgramService->createMiniQrcode($pages, 800, $scene,$member->coterie_id,$type);
+
+        $mini_qrcode = env('APP_URL').'/storage/'.$type.'/'.$member->coterie_id.'/'.'mini_qrcode.jpg';
+
+        \Log::info($mini_qrcode);
 
         if (!$mini_code) {
 
             return $this->failed('生成小程序码失败');
         }
 
-        $route = url('api/coterie/share') . '/?user_id=' . $member->user_id . '&coterie_id=' . $member->coterie_id . '&appid=' . $this->client_id() . '&scene=' . $scene . '&mini_code=' . $mini_code;
+        $route = url('api/coterie/share') . '/?user_id=' . $member->user_id . '&coterie_id=' . $member->coterie_id . '&appid=' . $this->client_id() . '&scene=' . $scene . '&mini_code=' . $mini_qrcode;
 
         $result = MiniProgramShareImg::generateShareImage($route, 'share_coterie');
 
