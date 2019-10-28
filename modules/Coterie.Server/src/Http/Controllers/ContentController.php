@@ -354,7 +354,7 @@ class ContentController extends Controller
      */
     public function getContentImage()
     {
-        if (!request()->header('wechatappid') || !request('invite_user_code')) {
+        if (!env('WECHAT_MINI_PROGRAM_APPID') || !request('invite_user_code')) {
 
             return $this->failed('参数错误');
         }
@@ -371,7 +371,7 @@ class ContentController extends Controller
         $scene = $member->coterie_id . '_' . request('content_id') . '_' . request('invite_user_code');
 
         //获取小程序码
-        $mini_code = $this->miniProgramService->createMiniQrcode(request()->header('wechatappid'), $pages, 800, $scene, 'share_coterie_content');
+        $mini_code = $this->miniProgramService->createMiniQrcode(env('WECHAT_MINI_PROGRAM_APPID'), $pages, 800, $scene, 'share_coterie_content');
 
         if (!$mini_code) {
 
