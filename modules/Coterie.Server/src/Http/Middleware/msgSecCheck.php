@@ -1,4 +1,4 @@
-﻿﻿<?php
+﻿<?php
 
 namespace iBrand\Coterie\Server\Http\Middleware;
 
@@ -52,6 +52,8 @@ class msgSecCheck
             if(!empty($temp)){
 
                 $res=$this->miniProgram->msgSecCheck($temp);
+
+
 
                 if($res['errcode']!=0){
 
