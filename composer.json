@@ -11,7 +11,7 @@
         "gzero/eloquent-tree": "^3.1",
         "ibrand/advert": "~1.0",
         "ibrand/auth-api": "^1.1",
-        "ibrand/backend": "~3.1",
+        "ibrand/backend": "dev-guojiang",
         "ibrand/common": "~1.0",
         "ibrand/laravel-active": "~2.0",
         "ibrand/laravel-aliyun-vod": "^1.0",
