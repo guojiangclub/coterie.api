@@ -113,53 +113,6 @@ class AppServiceProvider extends ServiceProvider
             \iBrand\Coterie\Core\Console\DatabaseDeleteCommand::class,
         ]);
 
-
-        $uuid=client_id();
-
-        if ($uuid AND $website = app(\Hyn\Tenancy\Contracts\Repositories\WebsiteRepository::class)->findByUuid($uuid)) {
-
-        $environment = app(\Hyn\Tenancy\Environment::class);
-
-        $environment->tenant($website);
-
-        config(['database.default' => 'tenant']);
-
-            $info=[
-                // 公众号 APPID
-                'app_id' => '',
-                // 小程序 APPID
-                'miniapp_id' => request()->header('wechatappid'),
-                // APP 引用的 appid
-                'appid' => '',
-                // 微信支付分配的微信商户号
-                'mch_id' => settings('wechat_payment_mcn_id'),
-                // 微信支付异步通知地址
-                'notify_url' => '/notify/wechat',
-                // 微信支付签名秘钥
-                'key' => settings('wechat_payment_key'),
-                // 客户端证书路径，退款、红包等需要用到。请填写绝对路径，linux 请确保权限问题。pem 格式。
-                'cert_client' => '',
-                // 客户端秘钥路径，退款、红包等需要用到。请填写绝对路径，linux 请确保权限问题。pem 格式。
-                'cert_key' => '',
-                // optional，默认 warning；日志路径为：sys_get_temp_dir().'/logs/yansongda.pay.log'
-                'log' => [
-                    'file' => storage_path('logs/wechat.log'),
-                    //  'level' => 'debug'
-                    'type' => 'single', // optional, 可选 daily.
-                    'max_file' => 30,
-                ],
-
-            ];
-
-            config(['ibrand.pay.default.wechat.' . $uuid => $info]);
-
-        } else {
-
-            config(['database.default' => 'mysql']);
-        }
-
-
-
         $this->setRedisTenancy();
 
     }
@@ -191,7 +144,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(InviteMemberRepository::class, InviteMemberRepositoryEloquent::class);
 
-        $this->app->bind('ibrand.pay.notify.coterie', CoteriePayNotifyService::class);
+        $this->app->bind('ibrand.pay.notify.default', CoteriePayNotifyService::class);
 
 
 

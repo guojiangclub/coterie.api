@@ -65,23 +65,6 @@ class CoteriePayNotifyService implements PayNotifyContract
 
     public function success(Charge $charge)
     {
-        \Log::info($charge->extra);
-
-        $uuid=isset($charge->extra['uuid'])?$charge->extra['uuid']:null;
-
-        if ($uuid AND $website = app(\Hyn\Tenancy\Contracts\Repositories\WebsiteRepository::class)->findByUuid($uuid)) {
-
-            $environment = app(\Hyn\Tenancy\Environment::class);
-
-            $environment->tenant($website);
-
-            config(['database.default' => 'tenant']);
-
-        } else {
-
-            config(['database.default' => 'mysql']);
-        }
-
 
         $user=request()->user();
 
@@ -144,6 +127,8 @@ class CoteriePayNotifyService implements PayNotifyContract
             } catch (\Exception $exception) {
 
                 DB::rollBack();
+
+                \Log::info($exception);
 
                 throw  new \Exception($exception);
 
