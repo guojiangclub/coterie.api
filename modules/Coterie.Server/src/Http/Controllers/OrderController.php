@@ -53,6 +53,11 @@ class OrderController extends Controller
 
         $user = request()->user();
 
+		if(request('is_ios')){
+
+            return $this->failed('由于相关规范,IOS无法在小程序内加入该果酱圈');
+        }
+
         $coterie=$this->coterieRepository->getCoterieMemberByUserID($user->id, $id);
 
         if ($coterie AND $coterie->cost_type == 'charge' AND empty($coterie->memberWithTrashed)) {
