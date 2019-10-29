@@ -63,25 +63,17 @@ use iBrand\Component\Pay\Facades\PayNotify;
 
             if ($coterie AND $coterie->cost_type == 'charge' AND empty($coterie->memberWithTrashed)) {
 
-                $data = ['channel' => 'wx_lite'
+                $data = ['channel' => 'wx_lite',
+                      'app' => 'coterie'
+                    , 'type' => 'default'
                     , 'order_no' => $order_no
                     , 'amount' => $order->price
                     , 'client_ip' => \request()->getClientIp()
                     , 'subject' => '加入付费圈子:' . $coterie->name
                     , 'body' => '加入付费圈子:' . $coterie->name
-                    , 'extra' => ['openid' => \request('openid'),'invite_user_code'=>request('invite_user_code'),'uuid'=>client_id()]];
+                    , 'extra' => ['openid' => \request('openid'),'invite_user_code'=>request('invite_user_code'),'uuid'=>null]];
 
-                $uuid=client_id();
-
-                $app='default';
-
-                if($uuid){
-
-                    $app=$uuid;
-
-                }
-
-                $charge = Charge::create($data,'coterie',$app);
+                $charge = Charge::create($data);
 
                 return $this->success(compact('charge'));
 
