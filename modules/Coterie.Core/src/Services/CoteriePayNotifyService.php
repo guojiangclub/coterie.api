@@ -66,22 +66,21 @@ class CoteriePayNotifyService implements PayNotifyContract
     public function success(Charge $charge)
     {
 
-        $user=request()->user();
-
         $order=$this->orderRepository->findByField('order_no',$charge->order_no)->first();
 
         if(!$order || $order->paid_at) return $order;
 
         //获取圈子信息
-        $coterie=$this->coterieRepository->getCoterieMemberByUserID($user->id, $order->coterie_id);
+        $coterie=$this->coterieRepository->getCoterieMemberByUserID($order->user_id, $order->coterie_id);
 
         if(!$coterie ||  $coterie->memberWithTrashed) {
 
             return false;
         }
 
+        $user=AuthUser::find($order->user_id);
 
-        if($charge->type=='coterie' AND $charge->paid==1 AND $charge->amount==$order->price){
+        if($charge->paid==1 AND $charge->amount==$order->price){
 
             try {
 
