@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-backend.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,6 @@ use iBrand\Component\User\Models\User;
 
 class Members extends \iBrand\Coterie\Core\Models\Member
 {
-
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -40,7 +39,9 @@ class Members extends \iBrand\Coterie\Core\Models\Member
 
     public function getStatusTextAttribute()
     {
-        if ($this->attributes['is_forbidden']) return '禁言';
+        if ($this->attributes['is_forbidden']) {
+            return '禁言';
+        }
 
         return '正常';
     }

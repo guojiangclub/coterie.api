@@ -1,12 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: admin
- * Date: 2019/1/7
- * Time: 20:14
+
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace iBrand\Coterie\Backend\Http\Controllers;
+
 use Encore\Admin\Facades\Admin as LaravelAdmin;
 use Encore\Admin\Layout\Content;
 
@@ -15,7 +19,6 @@ class SettingController extends Controller
     public function paySetting()
     {
         return LaravelAdmin::content(function (Content $content) {
-
             $content->header('支付设置');
 
             $content->breadcrumb(

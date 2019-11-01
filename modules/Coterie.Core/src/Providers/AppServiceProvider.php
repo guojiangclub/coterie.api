@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/EC-Open-Core.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,59 +14,52 @@ namespace iBrand\Coterie\Core\Providers;
 use iBrand\Component\User\Models\User as BaseUser;
 use iBrand\Component\User\UserServiceProvider;
 use iBrand\Coterie\Core\Auth\User;
+use iBrand\Coterie\Core\Console\InstallCommand;
+use iBrand\Coterie\Core\Models\Comment;
+use iBrand\Coterie\Core\Models\Content;
+use iBrand\Coterie\Core\Models\Coterie;
+use iBrand\Coterie\Core\Models\Member;
+use iBrand\Coterie\Core\Models\Order;
+use iBrand\Coterie\Core\Models\Praise;
+use iBrand\Coterie\Core\Models\Question;
+use iBrand\Coterie\Core\Models\Reply;
+use iBrand\Coterie\Core\Policies\CommentPolicy;
+use iBrand\Coterie\Core\Policies\ContentPolicy;
+use iBrand\Coterie\Core\Policies\CoteriePolicy;
+use iBrand\Coterie\Core\Policies\MemberPolicy;
+use iBrand\Coterie\Core\Policies\OrderPolicy;
+use iBrand\Coterie\Core\Policies\PraisePolicy;
+use iBrand\Coterie\Core\Policies\QuestionPolicy;
+use iBrand\Coterie\Core\Policies\ReplyPolicy;
+use iBrand\Coterie\Core\Repositories\CommentRepository;
+use iBrand\Coterie\Core\Repositories\ContentRepository;
+use iBrand\Coterie\Core\Repositories\CoterieRepository;
+use iBrand\Coterie\Core\Repositories\Eloquent\CommentRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\ContentRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\CoterieRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\InviteMemberRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\InviteRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\MemberRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\OrderRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\PraiseRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\QuestionRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\Eloquent\ReplyRepositoryEloquent;
+use iBrand\Coterie\Core\Repositories\InviteMemberRepository;
+use iBrand\Coterie\Core\Repositories\InviteRepository;
+use iBrand\Coterie\Core\Repositories\MemberRepository;
+use iBrand\Coterie\Core\Repositories\OrderRepository;
+use iBrand\Coterie\Core\Repositories\PraiseRepository;
+use iBrand\Coterie\Core\Repositories\QuestionRepository;
+use iBrand\Coterie\Core\Repositories\ReplyRepository;
+use iBrand\Coterie\Core\Services\CoteriePayNotifyService;
+use Illuminate\Cache\RedisStore;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Schema;
-use Illuminate\Support\Facades\Gate;
-use Laravel\Passport\Passport;
-use phpseclib\Crypt\RSA;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Cache\RedisStore;
-use iBrand\Coterie\Core\Repositories\CoterieRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\CoterieRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\MemberRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\MemberRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\ContentRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\ContentRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\CommentRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\CommentRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\QuestionRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\QuestionRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\ReplyRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\ReplyRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\PraiseRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\PraiseRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\OrderRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\OrderRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\InviteRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\InviteRepositoryEloquent;
-use iBrand\Coterie\Core\Repositories\InviteMemberRepository;
-use iBrand\Coterie\Core\Repositories\Eloquent\InviteMemberRepositoryEloquent;
-use iBrand\Coterie\Core\Models\Comment;
-use iBrand\Coterie\Core\Policies\CommentPolicy;
-use iBrand\Coterie\Core\Models\Content;
-use iBrand\Coterie\Core\Policies\ContentPolicy;
-use iBrand\Coterie\Core\Models\Coterie;
-use iBrand\Coterie\Core\Policies\CoteriePolicy;
-use iBrand\Coterie\Core\Models\Reply;
-use iBrand\Coterie\Core\Policies\ReplyPolicy;
-use iBrand\Coterie\Core\Models\Member;
-use iBrand\Coterie\Core\Policies\MemberPolicy;
-use iBrand\Coterie\Core\Models\Question;
-use iBrand\Coterie\Core\Policies\QuestionPolicy;
-use iBrand\Coterie\Core\Models\Praise;
-use iBrand\Coterie\Core\Policies\PraisePolicy;
-use iBrand\Coterie\Core\Models\Order;
-use iBrand\Coterie\Core\Policies\OrderPolicy;
-use iBrand\Coterie\Core\Services\CoteriePayNotifyService;
-use iBrand\Coterie\Core\Console\InstallCommand;
-
 
 class AppServiceProvider extends ServiceProvider
 {
-
-
-
-
     protected $policies = [
         Coterie::class => CoteriePolicy::class,
         Comment::class => CommentPolicy::class,
@@ -75,8 +68,7 @@ class AppServiceProvider extends ServiceProvider
         Member::class => MemberPolicy::class,
         Question::class => QuestionPolicy::class,
         Praise::class => PraisePolicy::class,
-        Order::class => OrderPolicy::class
-
+        Order::class => OrderPolicy::class,
     ];
 
     /**
@@ -84,8 +76,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-
         if (config('ibrand.coterie.secure')) {
             \URL::forceScheme('https');
         }
@@ -95,16 +85,15 @@ class AppServiceProvider extends ServiceProvider
         if (!class_exists('CreateCoterieTables')) {
             $timestamp = date('Y_m_d_His', time());
             $this->publishes([
-                __DIR__ . '/../../migrations/create_coterie_tables.php.stub' => database_path() . "/migrations/{$timestamp}_create_coterie_tables.php",
+                __DIR__.'/../../migrations/create_coterie_tables.php.stub' => database_path()."/migrations/{$timestamp}_create_coterie_tables.php",
             ], 'migrations');
         }
 
         $this->registerPolicies();
 
         $this->publishes([
-            app_path() . '/../vendor/laravel/passport/database/migrations' => database_path('migrations'),
+            app_path().'/../vendor/laravel/passport/database/migrations' => database_path('migrations'),
         ], 'migrations');
-
 
         $this->commands([InstallCommand::class]);
 
@@ -114,12 +103,10 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         $this->setRedisTenancy();
-
     }
 
     public function register()
     {
-
         $this->registerComponent();
 
         $this->app->bind(BaseUser::class, User::class);
@@ -145,9 +132,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(InviteMemberRepository::class, InviteMemberRepositoryEloquent::class);
 
         $this->app->bind('ibrand.pay.notify.default', CoteriePayNotifyService::class);
-
-
-
     }
 
     protected function registerComponent()
@@ -160,14 +144,10 @@ class AppServiceProvider extends ServiceProvider
         foreach ($this->policies as $key => $value) {
             Gate::policy($key, $value);
         }
-
     }
-
-
 
     protected function setRedisTenancy()
     {
-
 //        config(['cache.default' => 'redis_tenancy']);
 //
 //        Cache::extend('redis_tenancy', function ($app) {
@@ -183,11 +163,5 @@ class AppServiceProvider extends ServiceProvider
 //            return $res;
 //
 //        });
-
-
     }
-
-
-
-
 }

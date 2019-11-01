@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of ibrand/coterie-core.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace iBrand\Coterie\Core\Common;
 
 use iBrand\Common\Wechat\Factory;
 use Storage;
-
 
 class MiniProgram
 {
@@ -20,12 +28,10 @@ class MiniProgram
         $app = Factory::miniProgram($this->config);
 
         return $app->content_security->checkText($str);
-
     }
 
     public function imgSecCheck($path)
     {
-
         $app = Factory::miniProgram($this->config);
 
         return $app->content_security->checkImage($path);
@@ -60,5 +66,4 @@ class MiniProgram
 
         return false;
     }
-
 }

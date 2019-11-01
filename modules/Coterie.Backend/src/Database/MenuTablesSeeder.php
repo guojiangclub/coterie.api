@@ -1,10 +1,17 @@
 <?php
 
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace iBrand\Coterie\Backend\Database;
 
 use Encore\Admin\Auth\Database\Menu;
-use Encore\Admin\Auth\Database\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -50,7 +57,6 @@ class MenuTablesSeeder extends Seeder
             'created_at' => date('Y-m-d H:i:s', time()),
             'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
-
 
         $parent = DB::table(config('admin.database.menu_table'))->insertGetId([
             'parent_id' => 0,
@@ -128,6 +134,5 @@ class MenuTablesSeeder extends Seeder
             'created_at' => date('Y-m-d H:i:s', time()),
             'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
-
     }
 }

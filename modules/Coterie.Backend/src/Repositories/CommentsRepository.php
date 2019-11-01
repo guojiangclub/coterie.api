@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: admin
- * Date: 2018/12/29
- * Time: 16:31
+
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace iBrand\Coterie\Backend\Repositories;
-
 
 use iBrand\Coterie\Backend\Models\Comment;
 use Prettus\Repository\Eloquent\BaseRepository;
@@ -34,7 +36,7 @@ class CommentsRepository extends BaseRepository
                 $query = $query->onlyTrashed();
             }
 
-            if (count($where) AND is_array($where)) {
+            if (count($where) and is_array($where)) {
                 foreach ($where as $key => $value) {
                     if (is_array($value)) {
                         list($operate, $va) = $value;
@@ -46,6 +48,7 @@ class CommentsRepository extends BaseRepository
             }
 
             $query = $query->with('CoterieContent');
+
             return $query->orderBy('created_at', 'desc');
         })->paginate($limit);
     }

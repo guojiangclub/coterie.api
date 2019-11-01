@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,14 +35,13 @@ class CoterieRepositoryEloquent extends BaseRepository implements CoterieReposit
 
     /**
      * @param $id
+     *
      * @return mixed
      */
-
     public function getInfoByID($id, $limit = 5)
     {
         return $this->model->with('user')->with('memberGuest')
             ->with(['memberNormal' => function ($query) use ($limit) {
-
                 $query->orderBy('created_at', 'desc')->limit($limit);
             }])
             ->find($id);
@@ -62,60 +61,52 @@ class CoterieRepositoryEloquent extends BaseRepository implements CoterieReposit
     /**
      * @param $name
      * @param int $limit
+     *
      * @return mixed
      */
     public function getCoterieByName($name, $limit = 10)
     {
         return $this->model->with('user')
-            ->where('name', 'like', '%' . $name . '%')
+            ->where('name', 'like', '%'.$name.'%')
             ->orderBy('recommend_at', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate($limit);
     }
 
-
     /**
      * @param $user_id
      * @param int $limit
+     *
      * @return mixed
      */
-
     public function getCoterieByUserID($user_id, $limit = 10)
     {
-
         return $this->model->with('user')->whereHas('member', function ($query) use ($user_id) {
-
             return $query->where('user_id', $user_id)->where('is_forbidden', 0);
-
         })->orderBy('recommend_at', 'desc')->orderBy('created_at', 'desc')->paginate($limit);
     }
 
     /**
      * @param $user_id
      * @param $coterie_id
+     *
      * @return mixed
      */
     public function getCoterieMemberByUserID($user_id, $coterie_id)
     {
-
         return $this->model->with('user')
             ->where('id', $coterie_id)->with(['memberWithTrashed' => function ($query) use ($user_id, $coterie_id) {
-
                 return $query->where('user_id', $user_id)->where('coterie_id', $coterie_id);
-
             }])->first();
-
     }
-
 
     /**
      * @param $coterie_id
+     *
      * @return mixed
      */
     public function getCoterieByID($coterie_id)
     {
         return $this->model->with('user')->where('id', $coterie_id)->first();
-
     }
-
 }

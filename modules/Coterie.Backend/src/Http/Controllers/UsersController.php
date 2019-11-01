@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: admin
- * Date: 2018/12/26
- * Time: 14:25
+
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace iBrand\Coterie\Backend\Http\Controllers;
-
 
 use Encore\Admin\Facades\Admin as LaravelAdmin;
 use Encore\Admin\Layout\Content;
@@ -15,7 +17,6 @@ use iBrand\Coterie\Backend\Repositories\UserRepositoryEloquent;
 
 class UsersController extends Controller
 {
-
     protected $userRepository;
 
     public function __construct(UserRepositoryEloquent $userRepository)
@@ -28,7 +29,7 @@ class UsersController extends Controller
     {
         $where = [];
         if (!empty(request('mobile'))) {
-            $where['mobile'] = ['like', '%' . request('mobile') . '%'];
+            $where['mobile'] = ['like', '%'.request('mobile').'%'];
         }
         $users = $this->userRepository->getUserPaginate($where);
 
@@ -41,6 +42,5 @@ class UsersController extends Controller
 
             $content->body(view('account-backend::users.index', compact('users')));
         });
-
     }
 }

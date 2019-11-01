@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace iBrand\Coterie\Backend\Http\Middleware;
 
 use Closure;
@@ -14,7 +23,7 @@ class Authenticate
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param \Closure                 $next
      *
      * @return mixed
      */
@@ -36,7 +45,7 @@ class Authenticate
 
         $uuid = $request->cookie('ibrand_log_uuid');
         $cookie_key = 'ibrand_log_sso_user';
-        if (!$request->cookie($cookie_key) OR $uuid != $current_uuid) {
+        if (!$request->cookie($cookie_key) or $uuid != $current_uuid) {
             // Log::info(2);
             return $this->unAuthenticateHandle($request);
         }
@@ -58,13 +67,12 @@ class Authenticate
             }
         }
 
-        if ($request->getRequestUri() == '/admin') {
+        if ('/admin' == $request->getRequestUri()) {
             return redirect('/admin/coterie/mini/version');
         }
 
         return $next($request);
     }
-
 
     protected function unAuthenticateHandle($request)
     {
@@ -77,6 +85,6 @@ class Authenticate
         Cookie::queue(Cookie::forget('ibrand_log_appid'));
         Cookie::queue(Cookie::forget('ibrand_log_application_name'));
 
-        return redirect(env('APP_URL') . '/account/login');
+        return redirect(env('APP_URL').'/account/login');
     }
 }

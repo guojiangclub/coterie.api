@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,18 +11,17 @@
 
 namespace iBrand\Coterie\Core\Services;
 
-use Storage;
 use iBrand\Common\Wechat\Factory;
+use Storage;
 
 class MiniProgramService
 {
-
-
     /**
      * @param $page
      * @param $width
      * @param string $scene
      * @param string $type
+     *
      * @return bool|string
      */
 //    public function createMiniQrcode($appid, $page, $width, $scene = '', $type = 'share_coterie')
@@ -64,7 +63,7 @@ class MiniProgramService
 //
 //    }
 
-    public function createMiniQrcode($page, $width, $scene,$str,$type='coterie')
+    public function createMiniQrcode($page, $width, $scene, $str, $type = 'coterie')
     {
         $option = [
             'page' => $page,
@@ -86,29 +85,24 @@ class MiniProgramService
         }
 
         return false;
-
     }
 
     public function getSession($appid, $code)
     {
-
         $platform = new \iBrand\Coterie\Core\Services\PlatformService($appid, client_id());
 
         $data['code'] = $code;
 
-        $res = $platform->wxCurl(env('WECHAT_API_URL') . 'api/mini/base/session?client_id=' . env('WECHAT_API_CLIENT_ID') . '&appid=' . $appid, $data, false);
+        $res = $platform->wxCurl(env('WECHAT_API_URL').'api/mini/base/session?client_id='.env('WECHAT_API_CLIENT_ID').'&appid='.$appid, $data, false);
 
         $res_arr = [];
 
         if (json_decode($res)) {
-
             foreach (json_decode($res) as $key => $item) {
-
                 $res_arr[$key] = $item;
             }
         }
 
         return $res_arr;
     }
-
 }

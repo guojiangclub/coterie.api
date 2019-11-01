@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,10 +22,11 @@ class Reply extends Model
 
     protected $hidden = ['client_id'];
 
-    protected $appends = ['user_meta_info','to_user_meta_info','is_reply_user'];
+    protected $appends = ['user_meta_info', 'to_user_meta_info', 'is_reply_user'];
 
     /**
      * Content constructor.
+     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
@@ -45,21 +46,18 @@ class Reply extends Model
         return json_decode($this->to_meta);
     }
 
-
     public function CoterieContent()
     {
-        return $this->belongsTo(Content::class,'content_id');
+        return $this->belongsTo(Content::class, 'content_id');
     }
 
     public function comment()
     {
-        return $this->belongsTo(Comment::class,'comment_id');
+        return $this->belongsTo(Comment::class, 'comment_id');
     }
 
-
-    public function getIsReplyUserAttribute(){
-
-        return request()->user()->id==$this->user_id?1:0;
-
+    public function getIsReplyUserAttribute()
+    {
+        return request()->user()->id == $this->user_id ? 1 : 0;
     }
 }

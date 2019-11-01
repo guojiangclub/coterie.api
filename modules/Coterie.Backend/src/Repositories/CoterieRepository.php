@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace iBrand\Coterie\Backend\Repositories;
 
 use iBrand\Coterie\Backend\Models\Coterie;
@@ -8,7 +18,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
  * Created by PhpStorm.
  * User: admin
  * Date: 2018/12/26
- * Time: 14:30
+ * Time: 14:30.
  */
 class CoterieRepository extends BaseRepository
 {
@@ -32,12 +42,12 @@ class CoterieRepository extends BaseRepository
                 $query = $query->onlyTrashed();
             }
 
-            if (count($where) AND is_array($where)) {
+            if (count($where) and is_array($where)) {
                 foreach ($where as $key => $value) {
                     if (is_array($value)) {
                         list($operate, $va) = $value;
                         $query = $query->where($key, $operate, $va);
-                    } elseif ($key == 'recommend') {
+                    } elseif ('recommend' == $key) {
                         $query = $query->whereNotNull('recommend_at');
                     } else {
                         $query = $query->where($key, $value);
@@ -48,14 +58,10 @@ class CoterieRepository extends BaseRepository
             return $query->orderBy('updated_at', 'desc');
         });
 
-
-        if ($limit == 0) {
+        if (0 == $limit) {
             return $list->all();
-        } else {
-            return $list->paginate($limit);
         }
 
+        return $list->paginate($limit);
     }
-
-
 }

@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace iBrand\Coterie\Backend\Console;
 
-use Illuminate\Console\Command;
 use DB;
+use Illuminate\Console\Command;
 
 class InstallCommand extends Command
 {
@@ -48,7 +56,7 @@ class InstallCommand extends Command
                 'slug' => '*',
                 'http_method' => '',
                 'http_path' => '*',
-            ]
+            ],
             /*, [
                 'name' => '首页',
                 'slug' => 'dashboard',
@@ -98,8 +106,6 @@ class InstallCommand extends Command
             'slug' => 'manager',
         ]);*/
 
-
-
         //$admin::first()->roles()->save($admin_roles::first());
 
         $this->call('ibrand:backend-install');
@@ -126,7 +132,7 @@ class InstallCommand extends Command
                 'title' => '管理员管理',
                 'icon' => 'fa-users',
                 'uri' => 'auth/users',
-            ]
+            ],
 
             /*[
                 'parent_id' => 1,
@@ -166,7 +172,7 @@ class InstallCommand extends Command
         ]);
 
         // add role to menu.
-       /* $menu::find(2)->roles()->save($admin_roles::first());*/
+        /* $menu::find(2)->roles()->save($admin_roles::first());*/
 
         DB::table(config('admin.database.role_menu_table'))->truncate();
 
@@ -176,7 +182,6 @@ class InstallCommand extends Command
             $administrator->permissions()->save($permission::first());
         }
 
-
         //高级管理员菜单显示
         /*$menus = $menu::where('parent_id', 0)->whereNotIn('title', ['Operation log'])->get();
         $menu::where('title', 'Admin')->first()->roles()->save($advancedManager);
@@ -185,13 +190,12 @@ class InstallCommand extends Command
         }*/
 
         //高级管理员权限分配
-       /* $permissions = $permission::whereNotIn('slug', ['*', 'auth.logs'])->get();
-        foreach ($permissions as $permission) {
-            if (!$advancedManager->can($permission->slug)) {
-                $advancedManager->permissions()->save($permission);
-            }
-        }*/
-
+        /* $permissions = $permission::whereNotIn('slug', ['*', 'auth.logs'])->get();
+         foreach ($permissions as $permission) {
+             if (!$advancedManager->can($permission->slug)) {
+                 $advancedManager->permissions()->save($permission);
+             }
+         }*/
 
         //普通管理员菜单显示
         /*$menus = $menu::where('parent_id', 0)->whereNotIn('title', ['Operation log', 'Admin'])->get();
@@ -208,8 +212,5 @@ class InstallCommand extends Command
         }*/
 
         return true;
-
     }
-
-
 }

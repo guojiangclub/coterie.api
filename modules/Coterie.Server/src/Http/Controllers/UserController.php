@@ -3,14 +3,13 @@
 /*
  * This file is part of ibrand/coterie-server.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 namespace iBrand\Coterie\Server\Http\Controllers;
-
 
 use iBrand\Component\User\Models\User;
 use iBrand\Component\User\Repository\UserRepository;
@@ -27,7 +26,6 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepository)
     {
         $this->user = $userRepository;
-
     }
 
     public function me()
@@ -35,9 +33,8 @@ class UserController extends Controller
         $user = request()->user();
 
         //return $this->response()->item($user, new UserTransformer());
-        return $this->item($user,\iBrand\Coterie\Server\Resources\User::class);
+        return $this->item($user, \iBrand\Coterie\Server\Resources\User::class);
     }
-
 
     public function updateInfo()
     {
@@ -113,7 +110,7 @@ class UserController extends Controller
         $user = $this->user->update(['mobile' => $request->input('mobile')], $user->id);
 
         //return $this->response()->item($user, new UserTransformer());
-        return $this->item($user,\iBrand\Coterie\Server\Resources\User::class);
+        return $this->item($user, \iBrand\Coterie\Server\Resources\User::class);
     }
 
     private function generaterandomstring($length = 10)
@@ -127,7 +124,4 @@ class UserController extends Controller
 
         return $randomString;
     }
-
-
-
 }

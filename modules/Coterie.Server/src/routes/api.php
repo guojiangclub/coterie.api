@@ -3,7 +3,7 @@
 /*
  * This file is part of ibrand/coterie-server.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,8 +17,6 @@ $router->get('coterie/share', 'CoterieController@share');
 
 $router->get('content/share', 'ContentController@share');
 
-
-
 $router->get('coterie', 'CoterieController@show');
 
 $router->get('coterie/recommend', 'CoterieController@getRecommend');
@@ -28,7 +26,6 @@ $router->get('coterie/search', 'CoterieController@search');
 $router->get('content/info', 'ContentController@showInfo');
 
 $router->group(config('ibrand.coterie.routeAuthAttributes'), function ($router) {
-
     /************************* 上传图片接口 **********************/
     $router->post('upload/image', 'UploadController@ImageUpload');
 
@@ -50,7 +47,6 @@ $router->group(config('ibrand.coterie.routeAuthAttributes'), function ($router) 
     $router->post('coterie/delete', 'CoterieController@delete');
 
     $router->post('coterie/share', 'CoterieController@getCoterieImage');
-
 
     /************************* 圈子会员接口 **********************/
 
@@ -96,14 +92,11 @@ $router->group(config('ibrand.coterie.routeAuthAttributes'), function ($router) 
 
     $router->post('content/share', 'ContentController@getContentImage');
 
-
     /************************* 圈子提问接口 **********************/
 
     $router->get('question', 'QuestionController@index');
 
     $router->post('question/store', 'QuestionController@storeQuestion');
-
-
 
     /*************************评论接口 **********************/
 
@@ -123,14 +116,11 @@ $router->group(config('ibrand.coterie.routeAuthAttributes'), function ($router) 
 
     $router->post('comment/praise/delete', 'CommentController@praiseDelete');
 
-
     /*************************内容点赞接口 **********************/
 
     $router->post('content/praise/store', 'PraiseController@store');
 
     $router->post('content/praise/delete', 'PraiseController@delete');
-
-
 
     /*************************回复评论接口 **********************/
 
@@ -144,7 +134,6 @@ $router->group(config('ibrand.coterie.routeAuthAttributes'), function ($router) 
 
     $router->post('reply/praise/store', 'ReplyController@praiseStore');
 
-
     /************************* 订单接口 **********************/
 
     $router->post('order/store', 'OrderController@store');
@@ -154,7 +143,6 @@ $router->group(config('ibrand.coterie.routeAuthAttributes'), function ($router) 
     $router->post('coterie/payment', 'PaymentController@coterie');
 
     $router->post('coterie/payment/success', 'PaymentController@coterieSuccess');
-
 
     /************************* 消息通知接口 **********************/
 
@@ -167,8 +155,6 @@ $router->group(config('ibrand.coterie.routeAuthAttributes'), function ($router) 
     $router->post('notification/praise/mark/read', 'NotificationController@markPraiseAllRead');
 
     $router->get('notification/praise/unread/count', 'NotificationController@unreadPraiseCount');
-
-
-    });
+});
 
 //});

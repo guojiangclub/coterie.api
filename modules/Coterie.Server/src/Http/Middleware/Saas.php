@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of ibrand/coterie-server.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace iBrand\Coterie\Server\Http\Middleware;
 
-use Closure;
-use Illuminate\Contracts\Auth\Guard;
 use Auth;
+use Closure;
 use Hyn\Tenancy\Database\Connection;
+use Illuminate\Contracts\Auth\Guard;
 use Laravel\Passport\Passport;
 use phpseclib\Crypt\RSA;
 
@@ -23,10 +32,11 @@ class Saas
     /**
      * Create a new filter instance.
      *
-     * @param  Guard $auth
+     * @param Guard $auth
+     *
      * @return void
      */
-    public function __construct(Guard $auth,Connection $connection)
+    public function __construct(Guard $auth, Connection $connection)
     {
         $this->auth = $auth;
 
@@ -36,19 +46,17 @@ class Saas
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-
         $uuid = client_id();
 
-        if (!env('SAAS_SERVER_TYPE') || env('SAAS_SERVER_TYPE') == 'public') {
-
-            if (request()->is('api/*') AND !$uuid) {
-
+        if (!env('SAAS_SERVER_TYPE') || 'public' == env('SAAS_SERVER_TYPE')) {
+            if (request()->is('api/*') and !$uuid) {
                 throw new \Exception('非法请求');
             }
         }
@@ -68,16 +76,12 @@ class Saas
 
         $path = $uuid;
 
-
-        if(!file_exists(storage_path($path).'/oauth-public.key')){
-
-            if(!is_dir(storage_path($path))){
-
-                mkdir(storage_path($path),0777);
-
+        if (!file_exists(storage_path($path).'/oauth-public.key')) {
+            if (!is_dir(storage_path($path))) {
+                mkdir(storage_path($path), 0777);
             }
 
-            $rsa= new RSA;
+            $rsa = new RSA();
 
             $keys = $rsa->createKey(4096);
 
@@ -90,14 +94,10 @@ class Saas
                 file_put_contents($publicKey, array_get($keys, 'publickey'));
                 file_put_contents($privateKey, array_get($keys, 'privatekey'));
             }
-
         }
 
         Passport::loadKeysFrom(storage_path($path));
 
         return $next($request);
     }
-
-
-
 }

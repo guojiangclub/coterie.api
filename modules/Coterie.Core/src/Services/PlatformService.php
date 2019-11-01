@@ -1,16 +1,15 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 namespace iBrand\Coterie\Core\Services;
-
 
 use iBrand\Coterie\Core\Platform\AccessToken;
 use iBrand\Coterie\Core\Platform\Cache;
@@ -36,12 +35,11 @@ class PlatformService
 
     protected $uuid;
 
-    public function __construct($appid,$uuid)
+    public function __construct($appid, $uuid)
     {
+        $this->appid = $appid;
 
-        $this->appid=$appid;
-
-        $this->uuid=$uuid;
+        $this->uuid = $uuid;
 
         self::$appUrl = env('WECHAT_API_URL');
 
@@ -49,7 +47,7 @@ class PlatformService
 
         self::$CLIENT_SECRET = env('WECHAT_API_CLIENT_SECRET');
 
-        $this->token = new AccessToken(self::$appUrl.'oauth/token', 'wx.api.access_token', self::$CLIENT_ID, self::$CLIENT_SECRET,$this->appid,$this->uuid);
+        $this->token = new AccessToken(self::$appUrl.'oauth/token', 'wx.api.access_token', self::$CLIENT_ID, self::$CLIENT_SECRET, $this->appid, $this->uuid);
 
         $this->http = new Http($this->token);
     }
@@ -57,18 +55,18 @@ class PlatformService
     /**
      * @param $scene
      * @param array $optional
+     *
      * @return type
      */
-    public function getMiniProgramCode($appid,$scene,array $optional=[]){
-
-        $data=[
-            'scene'=>$scene,
-            'optional'=>$optional
+    public function getMiniProgramCode($appid, $scene, array $optional = [])
+    {
+        $data = [
+            'scene' => $scene,
+            'optional' => $optional,
         ];
 
-        return $this->wxCurl(self::$appUrl.'api/mini/app_code/getUnlimit?client_id='.self::$CLIENT_ID.'&appid='.$appid, $data,false);
+        return $this->wxCurl(self::$appUrl.'api/mini/app_code/getUnlimit?client_id='.self::$CLIENT_ID.'&appid='.$appid, $data, false);
     }
-
 
     public function getToken()
     {
@@ -77,7 +75,6 @@ class PlatformService
 
         return $this->token->getToken();
     }
-
 
     public function upload($type, $path, $url)
     {
@@ -116,7 +113,7 @@ class PlatformService
      *
      * @return type
      */
-    public function wxCurl($url, $optData = null,$json_decode=true)
+    public function wxCurl($url, $optData = null, $json_decode = true)
     {
         $headers[] = 'Authorization:Bearer '.$this->token->getToken();
         $ch = curl_init();
@@ -134,10 +131,10 @@ class PlatformService
 
         $res = curl_exec($ch);
 
-        if(!$json_decode){
-
+        if (!$json_decode) {
             return $res;
         }
+
         return json_decode($res);
     }
 }

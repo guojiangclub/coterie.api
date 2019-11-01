@@ -3,7 +3,7 @@
 /*
  * This file is part of ibrand/coterie-server.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,14 +11,12 @@
 
 namespace iBrand\Coterie\Server\Http\Controllers;
 
+use iBrand\Coterie\Core\Repositories\CoterieRepository;
 use iBrand\Coterie\Core\Repositories\MemberRepository;
 use iBrand\Coterie\Core\Repositories\OrderRepository;
-use iBrand\Coterie\Core\Repositories\CoterieRepository;
 
 class OrderController extends Controller
-
 {
-
     protected $memberRepository;
 
     protected $coterieRepository;
@@ -26,42 +24,35 @@ class OrderController extends Controller
     protected $orderRepository;
 
     public function __construct(
-
         MemberRepository $memberRepository,
 
         CoterieRepository $coterieRepository,
 
         OrderRepository $orderRepository
-    )
-    {
+    ) {
         $this->memberRepository = $memberRepository;
 
         $this->coterieRepository = $coterieRepository;
 
         $this->orderRepository = $orderRepository;
-
     }
-
 
     /**
      * @return \Dingo\Api\Http\Response|mixed
      */
     public function store()
     {
-
         $id = request('coterie_id');
 
         $user = request()->user();
 
-		if(request('is_ios')){
-
+        if (request('is_ios')) {
             return $this->failed('由于相关规范,IOS无法在小程序内加入该果酱圈');
         }
 
-        $coterie=$this->coterieRepository->getCoterieMemberByUserID($user->id, $id);
+        $coterie = $this->coterieRepository->getCoterieMemberByUserID($user->id, $id);
 
-        if ($coterie AND $coterie->cost_type == 'charge' AND empty($coterie->memberWithTrashed)) {
-
+        if ($coterie and 'charge' == $coterie->cost_type and empty($coterie->memberWithTrashed)) {
             $data['user_id'] = $user->id;
 
             $data['coterie_id'] = $coterie->id;
@@ -72,16 +63,11 @@ class OrderController extends Controller
 
             $data['order_no'] = build_order_no();
 
-            if ($res=$this->orderRepository->create($data)) {
-
-                return $this->success(['order_no'=>$res->order_no]);
+            if ($res = $this->orderRepository->create($data)) {
+                return $this->success(['order_no' => $res->order_no]);
             }
-
         }
 
         return $this->failed('');
-
     }
-
-
 }

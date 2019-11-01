@@ -3,7 +3,7 @@
 /*
  * This file is part of ibrand/coterie-server.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,13 +17,12 @@ class ServerServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'coterie');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'coterie');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config.php' => config_path('ibrand/coterie.php'),
             ]);
-
         }
     }
 

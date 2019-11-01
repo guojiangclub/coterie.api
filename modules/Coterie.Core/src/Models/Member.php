@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -27,9 +27,9 @@ class Member extends Model
 
     /**
      * Member constructor.
+     *
      * @param array $attributes
      */
-
     public function __construct(array $attributes = [])
     {
         $this->setTable(config('ibrand.app.database.prefix', 'ibrand_').'coterie_member');
@@ -37,21 +37,18 @@ class Member extends Model
         parent::__construct($attributes);
     }
 
-
     public function getUserMetaInfoAttribute()
     {
-       return json_decode($this->user_meta);
+        return json_decode($this->user_meta);
     }
-
 
     public function user()
     {
-        return $this->belongsTo(config('auth.providers.users.model'),'user_id')->where('status',1)->select(['id','nick_name','avatar']);
+        return $this->belongsTo(config('auth.providers.users.model'), 'user_id')->where('status', 1)->select(['id', 'nick_name', 'avatar']);
     }
 
     public function coterie()
     {
-        return $this->belongsTo(Coterie::class,'coterie_id');
+        return $this->belongsTo(Coterie::class, 'coterie_id');
     }
-
 }

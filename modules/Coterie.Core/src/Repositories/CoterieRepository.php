@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,13 +18,13 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface CoterieRepository extends RepositoryInterface
 {
-
     /**
      * @param $id
      * @param int $limit
+     *
      * @return mixed
      */
-    public function getInfoByID($id,$limit=5);
+    public function getInfoByID($id, $limit = 5);
 
     /**
      * @return mixed
@@ -34,20 +34,20 @@ interface CoterieRepository extends RepositoryInterface
     /**
      * @param $name
      * @param int $limit
+     *
      * @return mixed
      */
-    public function getCoterieByName($name,$limit=10);
+    public function getCoterieByName($name, $limit = 10);
 
     /**
      * @param $user_id
      * @param int $limit
+     *
      * @return mixed
      */
-    public function getCoterieByUserID($user_id,$limit=10);
+    public function getCoterieByUserID($user_id, $limit = 10);
 
-    public function getCoterieMemberByUserID($user_id,$coterie_id);
+    public function getCoterieMemberByUserID($user_id, $coterie_id);
 
     public function getCoterieByID($coterie_id);
-
-
 }

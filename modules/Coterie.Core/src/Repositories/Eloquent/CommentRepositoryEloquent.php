@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,6 @@ use iBrand\Coterie\Core\Models\Comment;
 use iBrand\Coterie\Core\Repositories\CommentRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Traits\CacheableRepository;
-
 
 /**
  * Class Repository.
@@ -37,6 +36,7 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
     /**
      * @param $content_id
      * @param int $limit
+     *
      * @return mixed
      */
     public function getCommentsByContentID($content_id, $limit = 10)
@@ -46,21 +46,17 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
             ->where('status', 1)
             ->orderBy('updated_at', 'desc')
             ->paginate($limit);
-
-
     }
 
     /**
      * @param $commentID
+     *
      * @return mixed
      */
     public function getCommentsByCommentID($commentID)
     {
-
         return $this->model->with('reply')
             ->where('status', 1)
             ->find($commentID);
     }
-
-
 }

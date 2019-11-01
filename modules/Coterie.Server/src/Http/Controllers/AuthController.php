@@ -3,7 +3,7 @@
 /*
  * This file is part of ibrand/coterie-server.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -42,9 +42,9 @@ class AuthController extends Controller
         $is_new = false;
 
         if (!$user = $this->userRepository->getUserByCredentials(['mobile' => $mobile])) {
-            $data=['mobile' => $mobile];
-            if($client_id=$this->client_id()){
-                $data['client_id']=$client_id;
+            $data = ['mobile' => $mobile];
+            if ($client_id = $this->client_id()) {
+                $data['client_id'] = $client_id;
             }
             $user = $this->userRepository->create($data);
             $is_new = true;
@@ -57,7 +57,6 @@ class AuthController extends Controller
         //1. create user token.
 
         $token = $user->createToken($mobile)->accessToken;
-
 
         //2. bind user bind data to user.
         $this->userService->bindPlatform($user->id, request('open_id'), config('wechat.mini_program.default.app_id'), 'miniprogram');

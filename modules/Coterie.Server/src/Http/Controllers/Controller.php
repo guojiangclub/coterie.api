@@ -3,7 +3,7 @@
 /*
  * This file is part of ibrand/coterie-server.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,101 +17,91 @@ use iBrand\Coterie\Core\Repositories\MemberRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
-
 abstract class Controller extends BaseController
 {
     protected $memberRepository;
     protected $coterieRepository;
 
     public function __construct(
-        MemberRepository $memberRepository
-        , CoterieRepository $coterieRepository
-    )
-    {
+        MemberRepository $memberRepository, CoterieRepository $coterieRepository
+    ) {
         $this->memberRepository = $memberRepository;
         $this->coterieRepository = $coterieRepository;
     }
-
 
     /**
      * @return array|string
      */
     public function client_id()
     {
-
-        if (env('SAAS_SERVER_TYPE') != 'public') {
-
+        if ('public' != env('SAAS_SERVER_TYPE')) {
             return null;
         }
 
         if (request('appid')) {
-
             return request('appid');
         }
-
 
         return request()->header('appid') ? request()->header('appid') : '';
     }
 
-
     /**
-     * 验证是否是该圈成员
+     * 验证是否是该圈成员.
      *
      * @param $coterie_id
      * @param null $user
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     protected function isCoterieUser($coterie_id, $user = null)
-
     {
-        $user == null ? $user = request()->user() : $user;
+        null == $user ? $user = request()->user() : $user;
 
         $member = $this->memberRepository->getMemberInfo($user->id, $coterie_id);
 
         if ($user->cant('isCoterieUser', $member)) {
-
             throw new \Exception('无权限');
         }
 
         return $member;
     }
 
-
     /**
-     * 验证是否是圈主
+     * 验证是否是圈主.
      *
      * @param $id
      * @param null $user
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     protected function isCoterieOwner($id, $user = null)
-
     {
-
-        $user == null ? $user = request()->user() : $user;
+        null == $user ? $user = request()->user() : $user;
 
         $coterie = $this->coterieRepository->with('user')->findByField('id', $id)->first();
 
         if ($user->cant('isCoterieOwner', $coterie)) {
-
             throw new \Exception('无权限');
         }
 
         return $coterie;
     }
 
-
     /**
      * @param array $list
-     * @param int $perPage
+     * @param int   $perPage
+     *
      * @return array|null
      */
     protected function setPaginator(array $list, $perPage = 10)
     {
-
-        if (count($list) == 0) return null;
+        if (0 == count($list)) {
+            return null;
+        }
 
         if (request()->has('page')) {
             $current_page = request()->input('page');
@@ -137,6 +127,4 @@ abstract class Controller extends BaseController
 
         return $page;
     }
-
-
 }

@@ -1,22 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: admin
- * Date: 2018/12/26
- * Time: 14:24
+
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace iBrand\Coterie\Backend\Http\Controllers;
 
-
 use Carbon\Carbon;
-use iBrand\Coterie\Backend\Repositories\ContentRepository;
 use Encore\Admin\Facades\Admin as LaravelAdmin;
 use Encore\Admin\Layout\Content;
+use iBrand\Coterie\Backend\Repositories\ContentRepository;
 
 class ContentController extends Controller
 {
-
     protected $contentRepository;
 
     public function __construct(ContentRepository $contentRepository)
@@ -43,13 +44,12 @@ class ContentController extends Controller
 
         $relationWhere = [];
         if (request('value')) {
-            $relationWhere['name'] = ['like', '%' . request('value') . '%'];
+            $relationWhere['name'] = ['like', '%'.request('value').'%'];
         }
 
         $lists = $this->contentRepository->getContentPaginate($where, $relationWhere);
 
         return LaravelAdmin::content(function (Content $content) use ($lists) {
-
             $content->header('圈子动态管理');
 
             $content->breadcrumb(
@@ -62,16 +62,15 @@ class ContentController extends Controller
     }
 
     /**
-     * 动态详情
+     * 动态详情.
+     *
      * @param $id
      */
     public function show($id)
     {
-
         $detail = $this->contentRepository->getContentByID($id);
 
         return LaravelAdmin::content(function (Content $content) use ($detail) {
-
             $content->header('动态详情');
 
             $content->breadcrumb(
@@ -85,6 +84,7 @@ class ContentController extends Controller
 
     /**
      * 更改推荐状态
+     *
      * @return mixed
      */
     public function switchRecommend()
@@ -93,18 +93,19 @@ class ContentController extends Controller
         $action = request('action');
 
         $content = $this->contentRepository->find($id);
-        if ($action == 'cancel') {
+        if ('cancel' == $action) {
             $content->recommended_at = null;
         } else {
             $content->recommended_at = Carbon::now();
         }
         $content->save();
-        return $this->ajaxJson();
 
+        return $this->ajaxJson();
     }
 
     /**
      * 切换置顶状态
+     *
      * @return mixed
      */
     public function switchStick()
@@ -113,17 +114,19 @@ class ContentController extends Controller
         $action = request('action');
 
         $content = $this->contentRepository->find($id);
-        if ($action == 'cancel') {
+        if ('cancel' == $action) {
             $content->stick_at = null;
         } else {
             $content->stick_at = Carbon::now();
         }
         $content->save();
+
         return $this->ajaxJson();
     }
 
     /**
      * 删除动态
+     *
      * @return mixed
      */
     public function delete()
@@ -132,11 +135,13 @@ class ContentController extends Controller
 
         $content = $this->contentRepository->find($id);
         $content->delete();
+
         return $this->ajaxJson();
     }
 
     /**
      * 恢复动态
+     *
      * @return mixed
      */
     public function restore()
@@ -144,11 +149,13 @@ class ContentController extends Controller
         $id = request('id');
         $content = $this->contentRepository->getContentByID($id);
         $content->restore();
+
         return $this->ajaxJson();
     }
 
     /**
-     * 审核
+     * 审核.
+     *
      * @return mixed
      */
     public function audited()
@@ -157,6 +164,7 @@ class ContentController extends Controller
         $content = $this->contentRepository->getContentByID($id);
         $content->status = 1;
         $content->save();
+
         return $this->ajaxJson();
     }
 }

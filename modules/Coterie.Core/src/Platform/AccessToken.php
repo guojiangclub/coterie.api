@@ -1,13 +1,13 @@
 <?php
+
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 
 namespace iBrand\Coterie\Core\Platform;
 
@@ -56,14 +56,14 @@ class AccessToken
      * @param string $appId
      * @param string $appSecret
      */
-    public function __construct($tokenUrl, $prefix, $client_id, $client_secret,$appid,$uuid)
+    public function __construct($tokenUrl, $prefix, $client_id, $client_secret, $appid, $uuid)
     {
         $this->getTokenUrl = $tokenUrl;
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
         $this->cache = new Cache($prefix);
-        $this->appid=$appid;
-        $this->uuid=$uuid;
+        $this->appid = $appid;
+        $this->uuid = $uuid;
     }
 
     /**
@@ -117,8 +117,8 @@ class AccessToken
         $params = [
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
-            'appid'=>$this->appid,
-            'uuid'=>$this->uuid,
+            'appid' => $this->appid,
+            'uuid' => $this->uuid,
             'grant_type' => 'client_credentials',
         ];
 

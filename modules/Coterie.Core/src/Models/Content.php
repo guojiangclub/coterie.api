@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,9 +11,9 @@
 
 namespace iBrand\Coterie\Core\Models;
 
+use iBrand\Component\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use iBrand\Component\User\Models\User;
 
 class Content extends Model
 {
@@ -25,15 +25,16 @@ class Content extends Model
 
     protected $hidden = ['client_id'];
 
-    protected $appends = ['meta_info','is_recommend', 'is_praise_user','is_content_user', 'is_stick', 'link_info', 'img_list_info', 'tags_list_info', 'audio_list_info'];
+    protected $appends = ['meta_info', 'is_recommend', 'is_praise_user', 'is_content_user', 'is_stick', 'link_info', 'img_list_info', 'tags_list_info', 'audio_list_info'];
 
     /**
      * Content constructor.
+     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
-        $this->setTable(config('ibrand.app.database.prefix', 'ibrand_') . 'coterie_content');
+        $this->setTable(config('ibrand.app.database.prefix', 'ibrand_').'coterie_content');
 
         parent::__construct($attributes);
     }
@@ -53,7 +54,6 @@ class Content extends Model
         return $this->belongsTo(Coterie::class, 'coterie_id');
     }
 
-
     public function comment()
     {
         return $this->hasMany(Comment::class, 'content_id');
@@ -68,7 +68,6 @@ class Content extends Model
     {
         return $this->belongsTo(config('auth.providers.users.model'), 'user_id')->where('status', 1)->select(['id', 'nick_name', 'avatar']);
     }
-
 
     public function getIsRecommendAttribute()
     {
@@ -88,18 +87,15 @@ class Content extends Model
         return 1;
     }
 
-
     public function getIsPraiseUserAttribute()
     {
         $user = request()->user();
 
-        if (!$user || count($this->praise) == 0) {
-
+        if (!$user || 0 == count($this->praise)) {
             return 0;
         }
 
-        if(in_array($user->id,$this->praise->pluck('user_id')->toArray())){
-
+        if (in_array($user->id, $this->praise->pluck('user_id')->toArray())) {
             return 1;
         }
 
@@ -110,19 +106,16 @@ class Content extends Model
     {
         $user = request()->user();
 
-        if (!$user || $this->user_id!=$user->id) {
-
+        if (!$user || $this->user_id != $user->id) {
             return 0;
         }
 
-      return 1;
+        return 1;
     }
-
 
     public function getLinkInfoAttribute()
     {
         if (!empty($this->link)) {
-
             return json_decode($this->link, true);
         }
 
@@ -132,7 +125,6 @@ class Content extends Model
     public function getImgListInfoAttribute()
     {
         if (!empty($this->img_list)) {
-
             return json_decode($this->img_list, true);
         }
 
@@ -142,7 +134,6 @@ class Content extends Model
     public function getTagsListInfoAttribute()
     {
         if (!empty($this->tags_list)) {
-
             return json_decode($this->tags_list, true);
         }
 
@@ -152,7 +143,6 @@ class Content extends Model
     public function getAudioListInfoAttribute()
     {
         if (!empty($this->audio_list)) {
-
             return json_decode($this->audio_list, true);
         }
 

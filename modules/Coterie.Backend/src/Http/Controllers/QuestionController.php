@@ -1,21 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: admin
- * Date: 2018/12/26
- * Time: 14:25
+
+/*
+ * This file is part of ibrand/coterie-backend.
+ *
+ * (c) 果酱社区 <https://guojiang.club>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace iBrand\Coterie\Backend\Http\Controllers;
 
-
-use iBrand\Coterie\Backend\Repositories\QuestionRepository;
 use Encore\Admin\Facades\Admin as LaravelAdmin;
 use Encore\Admin\Layout\Content;
+use iBrand\Coterie\Backend\Repositories\QuestionRepository;
 
 class QuestionController extends Controller
 {
-
     protected $questionRepository;
 
     public function __construct(QuestionRepository $questionRepository)
@@ -40,13 +41,12 @@ class QuestionController extends Controller
         }
 
         if (request('value')) {
-            $where['content'] = ['like', '%' . request('value') . '%'];
+            $where['content'] = ['like', '%'.request('value').'%'];
         }
 
         $lists = $this->questionRepository->getQuestionPaginate($where);
 
         return LaravelAdmin::content(function (Content $content) use ($lists) {
-
             $content->header('圈子提问管理');
 
             $content->breadcrumb(
@@ -63,7 +63,6 @@ class QuestionController extends Controller
         $detail = $this->questionRepository->getQuestionByID($id);
 
         return LaravelAdmin::content(function (Content $content) use ($detail) {
-
             $content->header('提问详情');
 
             $content->breadcrumb(
@@ -76,7 +75,8 @@ class QuestionController extends Controller
     }
 
     /**
-     * 删除问题
+     * 删除问题.
+     *
      * @return mixed
      */
     public function delete()
@@ -85,11 +85,13 @@ class QuestionController extends Controller
 
         $question = $this->questionRepository->find($id);
         $question->delete();
+
         return $this->ajaxJson();
     }
 
     /**
      * 恢复动态
+     *
      * @return mixed
      */
     public function restore()
@@ -97,6 +99,7 @@ class QuestionController extends Controller
         $id = request('id');
         $question = $this->questionRepository->getQuestionByID($id);
         $question->restore();
+
         return $this->ajaxJson();
     }
 }

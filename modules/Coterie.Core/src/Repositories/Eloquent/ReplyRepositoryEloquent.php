@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/coterie.
+ * This file is part of ibrand/coterie-core.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,6 @@ use iBrand\Coterie\Core\Models\Reply;
 use iBrand\Coterie\Core\Repositories\ReplyRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Traits\CacheableRepository;
-use Illuminate\Pagination\Paginator;
 
 /**
  * Class Repository.
@@ -33,9 +32,4 @@ class ReplyRepositoryEloquent extends BaseRepository implements ReplyRepository
     {
         return Reply::class;
     }
-
-
-
-
-
 }

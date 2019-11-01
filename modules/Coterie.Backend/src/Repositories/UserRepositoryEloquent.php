@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of ibrand/user.
+ * This file is part of ibrand/coterie-backend.
  *
- * (c) iBrand <https://www.ibrand.cc>
+ * (c) 果酱社区 <https://guojiang.club>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -53,7 +53,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     public function getUserPaginate($where, $limit = 15)
     {
         $data = $this->scopeQuery(function ($query) use ($where) {
-            if (is_array($where) AND count($where) > 0) {
+            if (is_array($where) and count($where) > 0) {
                 foreach ($where as $key => $value) {
                     if (is_array($value)) {
                         list($operate, $va) = $value;
@@ -63,11 +63,13 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
                     }
                 }
             }
+
             return $query->orderBy('created_at', 'desc');
         });
-        if ($limit == 0) {
+        if (0 == $limit) {
             return $data->all();
         }
+
         return $data->paginate($limit);
     }
 }
