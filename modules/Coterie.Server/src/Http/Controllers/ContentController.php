@@ -505,7 +505,7 @@ class ContentController extends Controller
 
         $coterie_id = request('coterie_id');
 
-        if ($this->isCoterieOwner($coterie_id) || $this->isContentUser($content_id)) {
+        if ($this->isContentUser($content_id) || $this->isCoterieOwner($coterie_id)) {
             if ($this->contentService->deleteContent($content_id, $coterie_id)) {
                 return $this->success();
             }
