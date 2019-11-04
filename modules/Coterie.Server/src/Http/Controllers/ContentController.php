@@ -505,8 +505,14 @@ class ContentController extends Controller
 
         $coterie_id = request('coterie_id');
 
-        if ($this->isContentUser($content_id) || $this->isCoterieOwner($coterie_id)) {
+        $user=request()->user();
+
+		$coterie = $this->coterieRepository->with('user')->findByField('id', $coterie_id)->first();
+
+		if (!$user->cant('isCoterieOwner', $coterie) || $this->isContentUser($content_id)) {
+
             if ($this->contentService->deleteContent($content_id, $coterie_id)) {
+
                 return $this->success();
             }
         }
