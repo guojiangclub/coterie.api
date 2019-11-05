@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -91,6 +91,9 @@
             display: flex;
             -webkit-align-content: center;
             align-content: center;
+            webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
             flex: 1;
         }
         #knowledge .block.knowladge-info .guest-box .left .avatar-box {
@@ -138,6 +141,10 @@
         #knowledge .block.topping .title .text {
             flex: 1;
             color: #909090;
+            webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
         }
         #knowledge .block.topping .title .filter {
             display: -webkit-box;
@@ -170,6 +177,10 @@
         #knowledge .block.topping .topping-item .text {
             color: #909090;
             padding-left: 10px;
+
+            webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
             flex: 1;
         }
         #knowledge .block.topping .topping-item i {
@@ -197,8 +208,12 @@
         }
         #knowledge .block.knowladge-item .theme-item .avatar-box .info {
             overflow: hidden;
-            flex: 1;
+
             margin-left: 15px;
+            webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
         }
         #knowledge .block.knowladge-item .theme-item .avatar-box .info .name {
             font-weight: bold;
@@ -394,6 +409,9 @@
             color: #004E9D;
         }
         #knowledge .block.knowladge-item .theme-item .comment-box .comment-item .text {
+            webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
             flex: 1;
             color: #4A4A4A;
         }
@@ -409,6 +427,10 @@
             -webkit-box-align: center;
         }
         #knowledge .code-box .left-item {
+
+            webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
             flex: 1;
         }
         #knowledge .code-box .left-item .top-info {
@@ -434,6 +456,9 @@
             border-radius: 50%;
         }
         #knowledge .code-box .left-item .top-info .text {
+            webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
             flex: 1;
         }
         #knowledge .code-box .left-item .top-info .text .nick-name {
@@ -481,7 +506,7 @@
                             <div class="topic">的话题</div>
                         </div>
                         <div class="time">
-                            来自数据圈：{{$content->coterie->name}}
+                            来自圈子：{{$content->coterie->name}}
                         </div>
                     </div>
                 </div>
