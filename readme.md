@@ -11,7 +11,7 @@
 ## 安装
 
 ```
-git clone git@gitlab.guojiang.club:guojiangclub/coterie.api.git
+git clone git@github.com:guojiangclub/coterie.api.git
 
 composer install -vvv
 
